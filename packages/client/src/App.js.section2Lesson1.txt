@@ -9,15 +9,12 @@ const App = () => {
   /* ユーザーのパブリックウォレットを保存するために使用する状態変数を定義 */
   const [currentAccount, setCurrentAccount] = useState("");
   /* ユーザーのメッセージを保存するために使用する状態変数を定義 */
-  const [upMessageValue] = useState('Up');
-  const [downMessageValue] = useState('Down');
-  const [messageValue, setMessageValue] = useState('');
-
+  const [messageValue, setMessageValue] = useState("");
   /* すべてのwavesを保存する状態変数を定義 */
   const [allWaves, setAllWaves] = useState([]);
   console.log("currentAccount: ", currentAccount);
   /* デプロイされたコントラクトのアドレスを保持する変数を作成 */
-  const contractAddress = "0xbd9b9175fb16B9c7166C969fDc6236Ff75769F58";
+  const contractAddress = "0x62b4a9876340E6925a2407e91315a238C679cA4B";
   /* コントラクトからすべてのwavesを取得するメソッドを作成 */
   /* ABIの内容を参照する変数を作成 */
   const contractABI = abi.abi;
@@ -147,10 +144,8 @@ const App = () => {
           signer
         );
         let count = await wavePortalContract.getTotalWaves();
-        /*console.log("Retrieved total wave count...", count.toNumber());*/
+        console.log("Retrieved total wave count...", count.toNumber());
         /* コントラクトに👋（wave）を書き込む */
-
-   
         const waveTxn = await wavePortalContract.wave(messageValue, {
           gasLimit: 300000,
         });
@@ -158,7 +153,7 @@ const App = () => {
         await waveTxn.wait();
         console.log("Mined -- ", waveTxn.hash);
         count = await wavePortalContract.getTotalWaves();
-         /*console.log("Retrieved total wave count...", count.toNumber());*/
+        console.log("Retrieved total wave count...", count.toNumber());
       } else {
         console.log("Ethereum object doesn't exist!");
       }
@@ -177,25 +172,19 @@ const App = () => {
       <div className="dataContainer">
         <div className="header">
           <span role="img" aria-label="hand-wave">
-            
+            👋
           </span>{" "}
-          NFT Voting System
+          WELCOME!
         </div>
         <div className="bio">
-          Please vote whichever you predict "Up" or "Down" for this NFT. 
+          イーサリアムウォレットを接続して、メッセージを作成したら、
           <span role="img" aria-label="hand-wave">
-            <img src={"https://ipfs.nftnest.io/uploads/CVKtPVn6RsVtvEm9qMZbKHe8OUFhhqOOFqmA4eQFjLQbWJEMbtB6r1KeoanQBFhx.png" } width={"300"}/>
+            👋
           </span>
+          を送ってください
           <span role="img" aria-label="shine">
+            ✨
           </span>
-          
-        </div>
-        <div className="bio">
-        What do think of tomorrow's floor price of this NFT collection?
-        <br />
-        NFT Collection Address: 0xe2e1d82b050bb5bfec776b2653a72f093a8373ab
-        <br />
-        Today's floor price: 0.0035ETH
         </div>
         <br />
         {/* ウォレットコネクトのボタンを実装 */}
@@ -207,54 +196,15 @@ const App = () => {
         {currentAccount && (
           <button className="waveButton">Wallet Connected</button>
         )}
-
         {/* waveボタンにwave関数を連動 */}
-        {/* {currentAccount && (
-          <button className="waveButton" onClick={wave}>
-            Up
-          </button>
-        )}*/}
-
-        {/* UPボタンを設置*/}
         {currentAccount && (
-             <button
-             className="waveButton"
-             value={messageValue}
-             onClick={async () => {
-              await setMessageValue("Up");
-              console.log("You clicked Up button")
-             }}
-           >
-             {upMessageValue}
-           </button>
-          )}
-
-        {/* DOWNボタンを設置*/}
-          {currentAccount && (
-            <button
-            className="waveButton"
-            value={messageValue}
-            onClick={async () => {
-              await setMessageValue("Down")
-              console.log("You clicked Down button")
-            }}
-          >
-            {downMessageValue}
-          </button>
-          )}
-
-          {currentAccount && (
           <button className="waveButton" onClick={wave}>
-            Vote!
+            Wave at Me
           </button>
-          )}
-          
-       
-
-
+        )}
         {/* メッセージボックスを実装*/}
-       {/* {currentAccount && (
-          <button
+        {currentAccount && (
+          <textarea
             name="messageArea"
             placeholder="メッセージはこちら"
             type="text"
@@ -262,7 +212,7 @@ const App = () => {
             value={messageValue}
             onChange={(e) => setMessageValue(e.target.value)}
           />
-        )}*/}
+        )}
         {/* 履歴を表示する */}
         {currentAccount &&
           allWaves
